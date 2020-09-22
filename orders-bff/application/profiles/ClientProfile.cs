@@ -1,3 +1,4 @@
+using application.dtos.response;
 using application.models;
 using AutoMapper;
 using Newtonsoft.Json.Linq;
@@ -15,6 +16,9 @@ namespace application.profiles
                 )
                 .ForMember(dest => dest.Email, src => src.MapFrom(i => i.Value<string>("email")))
                 .ForMember(dest => dest.Phone, src => src.MapFrom(i => i.Value<string>("phone")));
+
+
+            CreateMap<Client, ClientDto>();
         }
 
         private string GetIdFromHref(string href)

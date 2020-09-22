@@ -38,7 +38,6 @@ namespace api.Controllers
             [FromQuery] DateTime? endDate
         )
         {
-            _logger.Log(LogLevel.Information, "Search");
 
             var dto = new OrderSearchDto
             {
@@ -48,6 +47,8 @@ namespace api.Controllers
                 StartDate = startDate,
                 EndDate = endDate
             };
+
+            _logger.Log(LogLevel.Information, "Search", dto);
 
             return Ok(await _orderService.Search(dto));
         }

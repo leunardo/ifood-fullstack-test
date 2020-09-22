@@ -7,6 +7,6 @@ namespace application.dtos.response
         public Guid Id { get; set; }
         public DateTime Date { get; set; }
         public ClientDto Client { get; set; }
-        public string TotalValue { get; set; }
+        public double TotalValue { get; set; }
     }
 }
