@@ -15,11 +15,22 @@ namespace application.profiles
                 .ForMember(dest => dest.Quantity, src => src.MapFrom(i => i.Value<int>("quantity")));
 
             CreateMap<JToken, Order>()
+                .ForMember(dest => dest.Id, src => src.MapFrom(i =>
+                     GetIdFromHref(i.SelectToken("_links.self.href").Value<string>()))
+                )
                 .ForMember(dest => dest.ClientId, src => src.MapFrom(i => Guid.Parse(i.Value<string>("clientId"))))
                 .ForMember(dest => dest.RestaurantId, src => src.MapFrom(i => Guid.Parse(i.Value<string>("restaurantId"))))
                 .ForMember(dest => dest.CreatedAt, src => src.MapFrom(i => i.Value<DateTime>("createdAt")))
                 .ForMember(dest => dest.Items, src => src.MapFrom(i => i.SelectToken("items")))
                 .ForMember(dest => dest.ConfirmedAt, src => src.MapFrom(i => i.Value<DateTime>("confirmedAt")));
+                
+        }
+
+        private string GetIdFromHref(string href)
+        {
+            return href.Substring(
+                href.LastIndexOf("/") + 1
+            );
         }
 
     }
