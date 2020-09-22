@@ -1,6 +1,6 @@
 using System;
 
-namespace application.dtos
+namespace application.dtos.response
 {
     public class ItemDto
     {

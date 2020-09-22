@@ -1,14 +1,14 @@
 using System;
 using System.Collections.Generic;
 
-namespace application.dtos
+namespace application.dtos.request
 {
-    public class OrderFullDto
+    public class OrderSearchDto
     {
-        public Guid Id { get; set; }
+        public DateTime? StartDate { get; set; }
+        public DateTime? EndDate { get; set; }
         public string ClientName { get; set; }
         public string Phone { get; set; }
         public string Email { get; set; }
-        public IEnumerable<ItemDto> Items { get; set; }
     }
 }

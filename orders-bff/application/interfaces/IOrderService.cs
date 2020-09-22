@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using application.dtos;
+using application.dtos.request;
+using application.dtos.response;
 
 namespace application.interfaces
 {

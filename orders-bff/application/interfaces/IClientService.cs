@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using application.dtos;
+using application.dtos.request;
 using application.models;
 
 namespace application.interfaces
