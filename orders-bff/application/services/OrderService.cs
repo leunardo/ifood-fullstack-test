@@ -32,7 +32,7 @@ namespace application.services
 
         public async Task<IEnumerable<OrderDto>> Search(OrderSearchDto search)
         {
-            var orders = GetOrders(search);
+            var orders = SearchOrders(search);
             var clients = _clientService.SearchClients(search);
 
             await Task.WhenAll(orders, clients);
@@ -44,7 +44,30 @@ namespace application.services
             return result;
         }
 
-        private async Task<IEnumerable<Order>> GetOrders(OrderSearchDto search)
+        
+        public async Task<OrderFullDto> GetOrder(Guid id)
+        {
+            var order = await FindOrder(id);
+            var client = await _clientService.GetClient(order.ClientId);
+            var result = CreateOrderFullDto(order, client);
+
+            return result;
+        }
+
+        private async Task<Order> FindOrder(Guid id)
+        {
+            using (var httpClient = new HttpClient())
+            {
+                var request = await httpClient
+                    .WithUrl(_apiUrl + $"/orders/{id}")
+                    .GetAsync<JToken>();
+
+                var order = _mapper.Map<Order>(request);
+                return order;
+            }
+        }
+
+        private async Task<IEnumerable<Order>> SearchOrders(OrderSearchDto search)
         {
             using (var httpClient = new HttpClient())
             {
@@ -75,5 +98,15 @@ namespace application.services
         private ClientDto CreateClientDto(Client client) => client != null
             ? _mapper.Map<ClientDto>(client)
             : null;
+
+        private OrderFullDto CreateOrderFullDto(Order order, Client client)
+        {
+            return new OrderFullDto
+            {
+                Client = CreateClientDto(client),
+                Id = order.Id,
+                Items = _mapper.Map<List<ItemDto>>(order.Items)
+            };
+        }
     }
 }

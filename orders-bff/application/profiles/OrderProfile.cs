@@ -1,4 +1,5 @@
 using System;
+using application.dtos.response;
 using application.models;
 using AutoMapper;
 using Newtonsoft.Json.Linq;
@@ -23,6 +24,8 @@ namespace application.profiles
                 .ForMember(dest => dest.CreatedAt, src => src.MapFrom(i => i.Value<DateTime>("createdAt")))
                 .ForMember(dest => dest.Items, src => src.MapFrom(i => i.SelectToken("items")))
                 .ForMember(dest => dest.ConfirmedAt, src => src.MapFrom(i => i.Value<DateTime>("confirmedAt")));
+
+            CreateMap<Item, ItemDto>();
                 
         }
 

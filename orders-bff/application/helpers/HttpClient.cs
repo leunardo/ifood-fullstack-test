@@ -7,7 +7,7 @@ namespace application.helpers
 {
     public class HttpClient : System.Net.Http.HttpClient
     {
-        private string _queryParams;
+        private string _queryParams = "";
         private string _resourcePath;
         public HttpClient() : base()
         {
@@ -36,6 +36,8 @@ namespace application.helpers
             return this;
         }
 
-        private string GetQueryParameters() => "?" + _queryParams.Substring(1);
+        private string GetQueryParameters() => string.IsNullOrEmpty(_queryParams)
+            ? string.Empty 
+            : "?" + _queryParams.Substring(1);
     }
 }

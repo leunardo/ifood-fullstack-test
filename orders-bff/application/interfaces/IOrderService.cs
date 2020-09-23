@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using application.dtos.request;
@@ -8,5 +9,6 @@ namespace application.interfaces
     public interface IOrderService
     {
         Task<IEnumerable<OrderDto>> Search(OrderSearchDto search);
+        Task<OrderFullDto> GetOrder(Guid id);
     }
 }

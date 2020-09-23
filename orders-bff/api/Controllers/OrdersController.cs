@@ -54,9 +54,9 @@ namespace api.Controllers
         }
 
         [HttpGet("{id}")]
-        public ActionResult<OrderFullDto> GetFullOrder()
+        public async Task<ActionResult<OrderFullDto>> GetFullOrder([FromRoute] Guid id)
         {
-            return Ok(null);
+            return Ok(await _orderService.GetOrder(id));
         }
     }
 }

@@ -26,6 +26,25 @@ namespace application.services
             _mapper = mapper;
         }
 
+        public Task<Client> GetClient(Guid id)
+        {
+            return FindClient(id);
+        }
+
+        private async Task<Client> FindClient(Guid id)
+        {
+            using (var httpClient = new HttpClient())
+            {
+                var json = await httpClient
+                    .WithUrl(_apiUrl + $"/clients/{id}")
+                    .GetAsync<JToken>();
+
+                var client = _mapper.Map<Client>(json);
+
+                return client;
+            }
+        }
+
         public async Task<IEnumerable<Client>> SearchClients(OrderSearchDto search)
         {
             using (var httpClient = new HttpClient())
