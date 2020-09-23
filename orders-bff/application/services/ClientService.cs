@@ -50,10 +50,10 @@ namespace application.services
             using (var httpClient = new HttpClient())
             {
                 var json = await httpClient
-                    .WithUrl(_apiUrl + $"/clients/search/findAllClients")
                     .AddQueryParameter("name", search.ClientName)
                     .AddQueryParameter("phone", search.Phone)
                     .AddQueryParameter("email", search.Email)
+                    .WithUrl(_apiUrl + $"/clients/search/findAllClients")
                     .GetAsync<JToken>();
 
                 var clients = _mapper.Map<List<Client>>(json["_embedded"]["clients"]);

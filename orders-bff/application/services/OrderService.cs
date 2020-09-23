@@ -72,9 +72,9 @@ namespace application.services
             using (var httpClient = new HttpClient())
             {
                 var request = await httpClient
-                    .WithUrl(_apiUrl + "/orders/search/byDate")
                     .AddQueryParameter("start", search.StartDate.GetValueOrDefault(DateTime.MinValue).ToString(_dateFormat))
                     .AddQueryParameter("end", search.EndDate.GetValueOrDefault(DateTime.MaxValue).ToString(_dateFormat))
+                    .WithUrl(_apiUrl + "/orders/search/byDate")
                     .GetAsync<JToken>();
 
                 var orders = _mapper.Map<List<Order>>(request["_embedded"]["orders"]);

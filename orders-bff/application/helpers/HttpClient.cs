@@ -7,23 +7,14 @@ namespace application.helpers
 {
     public class HttpClient : System.Net.Http.HttpClient
     {
-        private string _queryParams = "";
-        private string _resourcePath;
-        public HttpClient() : base()
-        {
-        }
+        protected string _queryParams = "";
+        protected string _resourcePath;
+        public HttpClient() : base() {}
 
-        public async Task<T> GetAsync<T>()
-        {
-            var request = await base.GetStringAsync(_resourcePath + GetQueryParameters());
-            return  JsonConvert.DeserializeObject<T>(request);
-        }
-
-
-        public HttpClient WithUrl(string resourcePath)
+        public HttpClientExecutable WithUrl(string resourcePath)
         {
             _resourcePath = resourcePath;
-            return this;
+            return this.ToExecutable();
         }
 
         public HttpClient AddQueryParameter(string key, object value)
@@ -36,8 +27,25 @@ namespace application.helpers
             return this;
         }
 
-        private string GetQueryParameters() => string.IsNullOrEmpty(_queryParams)
-            ? string.Empty 
-            : "?" + _queryParams.Substring(1);
+        protected HttpClientExecutable ToExecutable() => new HttpClientExecutable(_queryParams, _resourcePath);
+
+        public class HttpClientExecutable : HttpClient
+        {
+            public HttpClientExecutable(string queryParams, string resourcePath)
+            {
+                base._queryParams = queryParams;
+                base._resourcePath = resourcePath;
+            }
+
+            public async Task<T> GetAsync<T>()
+            {
+                var request = await base.GetStringAsync(_resourcePath + GetQueryParameters());
+                return  JsonConvert.DeserializeObject<T>(request);
+            }
+
+            private string GetQueryParameters() => string.IsNullOrEmpty(_queryParams)
+                ? string.Empty 
+                : "?" + _queryParams.Substring(1);
+        }
     }
 }
