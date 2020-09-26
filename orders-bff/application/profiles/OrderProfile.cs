@@ -23,7 +23,9 @@ namespace application.profiles
                 .ForMember(dest => dest.RestaurantId, src => src.MapFrom(i => Guid.Parse(i.Value<string>("restaurantId"))))
                 .ForMember(dest => dest.CreatedAt, src => src.MapFrom(i => i.Value<DateTime>("createdAt")))
                 .ForMember(dest => dest.Items, src => src.MapFrom(i => i.SelectToken("items")))
-                .ForMember(dest => dest.ConfirmedAt, src => src.MapFrom(i => i.Value<DateTime>("confirmedAt")));
+                .ForMember(dest => dest.ConfirmedAt, src => src.MapFrom(i => i.Value<DateTime>("confirmedAt")))
+                .ReverseMap();
+                
 
             CreateMap<Item, ItemDto>();
                 

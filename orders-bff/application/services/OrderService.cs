@@ -5,8 +5,10 @@ using System.Threading.Tasks;
 using application.dtos.request;
 using application.dtos.response;
 using application.helpers;
+using Rng = application.helpers.Random;
 using application.interfaces;
 using application.models;
+
 using AutoMapper;
 using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json.Linq;
@@ -107,6 +109,37 @@ namespace application.services
                 Id = order.Id,
                 Items = _mapper.Map<List<ItemDto>>(order.Items)
             };
+        }
+
+        public async Task<Order> SaveOrder(Order order)
+        {
+            using (var httpClient = new HttpClient())
+            {
+                var json = await httpClient
+                    .WithUrl(_apiUrl + $"/orders")
+                    .PostAsync<JToken, Order>(order);
+
+                var orderResult = _mapper.Map<Order>(json);
+
+                return orderResult;
+            }
+        }
+
+        public async Task PopulateDatabases()
+        {
+           var rng = Rng.rng;
+
+           for (var i = 0; i < rng.Next(1, 10); i++)
+           {
+               var client = Rng.GenerateClient();
+               client = await _clientService.SaveClient(client);
+
+               for (var j = 0; j < rng.Next(1, 10); j++)
+               {
+                   var order = Rng.GenerateOrder(client);
+                   await SaveOrder(order);
+               }
+           }
         }
     }
 }
