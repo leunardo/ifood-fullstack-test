@@ -36,8 +36,20 @@ namespace api
             services.AddControllers().AddNewtonsoftJson(options => {
                 options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
             });
+
             services.AddScoped<IOrderService, OrderService>();
             services.AddScoped<IClientService, ClientService>();
+
+            services.AddCors(c =>
+            {
+                c.AddPolicy("cors", policy =>
+                {
+                    policy
+                        .AllowAnyHeader()
+                        .AllowAnyOrigin()
+                        .WithMethods("GET", "OPTIONS");
+                });
+            });
 
             var config = new AutoMapper.MapperConfiguration(cfg =>
             {
@@ -87,6 +99,8 @@ namespace api
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "IFood Back-end for Front-end Orders API v1");
                 c.RoutePrefix = string.Empty;
             });
+
+            app.UseCors("cors");
 
             app.UseHttpsRedirection();
 
