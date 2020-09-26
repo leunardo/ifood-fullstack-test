@@ -10,5 +10,6 @@ namespace application.interfaces
     {
         Task<IEnumerable<Client>> SearchClients(OrderSearchDto search);
         Task<Client> GetClient(Guid id);
+        Task<Client> SaveClient(Client client);
     }
 }

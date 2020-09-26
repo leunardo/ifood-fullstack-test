@@ -61,5 +61,19 @@ namespace application.services
                 return clients;
             }
         }
+
+        public async Task<Client> SaveClient(Client client)
+        {
+            using (var httpClient = new HttpClient())
+            {
+                var json = await httpClient
+                    .WithUrl(_apiUrl + $"/clients")
+                    .PostAsync<JToken, Client>(client);
+
+                var clientResult = _mapper.Map<Client>(json);
+
+                return clientResult;
+            }
+        }
     }
 }
