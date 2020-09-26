@@ -70,5 +70,12 @@ namespace api.Controllers
 
             return Ok(await _orderService.GetOrder(id));
         }
+
+        [HttpGet("populate")]
+        public async Task<ActionResult> Populate()
+        {
+            await _orderService.PopulateDatabases();
+            return Ok();
+        }
     }
 }
