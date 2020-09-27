@@ -1,3 +1,7 @@
-Orders
+<h1>Order List</h1>
+
+<app-orders-search></app-orders-search>
+
+<app-orders-table></app-orders-table>
 
 <pre *ngFor="let order of orders$ | async">{{ order | json }}</pre>

@@ -10,18 +10,19 @@ import { OrderService } from './shared/services/order.service';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
-  orders$ = this.orderService.search();
+  orders$ = this.orderService.orders$;
+
   form: FormGroup;
 
 
   constructor(
     private orderService: OrderService,
     private fb: FormBuilder
-  ) {
+  ) { }
 
-  }
   ngOnInit(): void {
     this.setupForm();
+    this.orderService.search();
   }
 
   private setupForm(): void {
