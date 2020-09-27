@@ -11,7 +11,10 @@ import { environment } from '../../../environments/environment';
 })
 export class OrderService {
   private ordersSubject = new Subject<Order[]>();
+  private fullOrderSubject = new Subject<string>();
+
   public orders$ = this.ordersSubject.asObservable();
+  public fullOrder$ = this.fullOrderSubject.asObservable();
 
   constructor(private httpClient: HttpClient) { }
 
@@ -22,6 +25,14 @@ export class OrderService {
       .subscribe(orders => {
         this.ordersSubject.next(orders);
       });
+  }
+
+  openFullOrder(id: string): void {
+    this.fullOrderSubject.next(id);
+  }
+
+  findById(id: string): Observable<Order> {
+    return this.httpClient.get<Order>(`${environment.apiUrl}/orders/${id}`);
   }
 
   private getParams(query: OrderSearch): HttpParams {

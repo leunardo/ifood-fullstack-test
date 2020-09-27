@@ -2,6 +2,4 @@
 
 <app-orders-search></app-orders-search>
 
-<app-orders-table></app-orders-table>
-
-<pre *ngFor="let order of orders$ | async">{{ order | json }}</pre>
+<app-orders-table [orders]="orders$ | async"></app-orders-table>
