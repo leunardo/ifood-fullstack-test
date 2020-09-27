@@ -76,7 +76,26 @@ In the API layer I am using .NET Core, which is the language I use more often fo
 * Liskov Substitution Principle
 * Builder Pattern
 * AutoMapper to map and convert classes from json and dtos
+* OpenAPI Documentation using Swagger
 
 ### Java Services
 
 I didn't change much of the architecture done in the java microservices. Basically what I did was add methods to query data from the database in the format I thought it would facilitate to be consumed in the BFF.
+
+### Running the app
+
+In order to run the app, follow the steps to run and install the java microservices described above, then do the following steps to run the BFF and client.
+
+#### Client
+
+1. on `orders-client` run the commands `npm install` and `npm start` to run development mode.
+2. navigate to `http://localhost:4200`
+
+    
+*Node and npm required to be installed previously.
+
+#### API
+1. on `orders-bff` run the command `dotnet run` to run development mode.
+2. if a new page didn`t open for you, you can access `http://localhost:5000` to access the OpenAPI Documentation of the API.
+
+* .NET Core SDK required to be installed previously.
