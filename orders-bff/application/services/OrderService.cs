@@ -109,7 +109,8 @@ namespace application.services
             {
                 Client = CreateClientDto(client),
                 Id = order.Id,
-                Items = _mapper.Map<List<ItemDto>>(order.Items)
+                Items = _mapper.Map<List<ItemDto>>(order.Items),
+                TotalValue = order.Items.Select(i => i.Price * i.Quantity).Sum()
             };
         }
 

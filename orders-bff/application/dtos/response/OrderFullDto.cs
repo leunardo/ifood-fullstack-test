@@ -8,5 +8,6 @@ namespace application.dtos.response
         public Guid Id { get; set; }
         public ClientDto Client { get; set; }
         public IEnumerable<ItemDto> Items { get; set; }
+        public double TotalValue { get; set; }
     }
 }
