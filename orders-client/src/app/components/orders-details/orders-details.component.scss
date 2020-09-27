@@ -1,0 +1,15 @@
+
+table {
+  width: 100%;
+  margin-top: 30px;
+  border: 1px solid lightgray;
+}
+
+.client-details {
+  display: flex;
+  justify-content: space-between;
+}
+
+.total {
+  text-transform: uppercase;
+}
