@@ -44,3 +44,39 @@ As this web application will be a worldwide success, it must be prepared to be f
 In other words, each micro-service will constantly reiceive a POST requests 
 (let's say 2/sec for client and 50/sec for order) and your web application will have a lots of users 
 active simultaneously (about ~1k).
+
+---
+
+## Solution
+
+For this solution I have decided to use the Back-End For Front-end pattern (BFF) having a layer between the client and the microservices used, giving responsibility for this layer to decide what the client needs to know.
+
+Here's the final diagram for the entire application:
+
+![App final diagram](./application-diagram.png)
+
+
+### Client App (orders-client)
+
+The client app is created using Angular 10 which is a technology I am very confortable. Some patterns are worth it mention:
+
+* Reactive programming with RxJs for state management
+* Functional programming
+* Dependency Injection
+
+Here's a detailed description of the client app flow:
+![Client App Flow Diagram](./orders-client/client-flow-diagram.png)
+
+### API (orders-bff)
+
+In the API layer I am using .NET Core, which is the language I use more often for back-end. Here I have used something like:
+
+* Dependency Injection
+* Service Pattern
+* Liskov Substitution Principle
+* Builder Pattern
+* AutoMapper to map and convert classes from json and dtos
+
+### Java Services
+
+I didn't change much of the architecture done in the java microservices. Basically what I did was add methods to query data from the database in the format I thought it would facilitate to be consumed in the BFF.
