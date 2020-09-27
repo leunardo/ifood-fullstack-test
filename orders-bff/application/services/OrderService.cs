@@ -39,9 +39,11 @@ namespace application.services
 
             await Task.WhenAll(orders, clients);
             
-            var result = orders.Result.Select(
-                order => CreateOrderDto(order, clients.Result)
-            );
+            var result = orders.Result
+                .Where(order => clients.Result.Any(client => client.Id == order.ClientId))
+                .Select(
+                    order => CreateOrderDto(order, clients.Result)
+                );
 
             return result;
         }
