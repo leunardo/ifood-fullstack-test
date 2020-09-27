@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { HttpClient, HttpParams } from '@angular/common/http';
 
 import { Order } from '../models/order';
@@ -10,20 +10,34 @@ import { environment } from '../../../environments/environment';
   providedIn: 'root'
 })
 export class OrderService {
-  constructor(private httpClient: HttpClient) {
+  private ordersSubject = new Subject<Order[]>();
+  public orders$ = this.ordersSubject.asObservable();
 
+  constructor(private httpClient: HttpClient) { }
+
+  search(query?: OrderSearch): void {
+    const params = this.getParams(query);
+
+    this.httpClient.get<Order[]>(`${environment.apiUrl}/orders`, { params })
+      .subscribe(orders => {
+        this.ordersSubject.next(orders);
+      });
   }
 
-  search(query?: OrderSearch): Observable<Order[]> {
-    const params = new HttpParams();
-    if (query) {
-      params.append('name', query.name);
-      params.append('phone', query.phone);
-      params.append('email', query.email);
-      params.append('startDate', query.startDate.toISOString());
-      params.append('endDate', query.endDate.toISOString());
+  private getParams(query: OrderSearch): HttpParams {
+    let params = new HttpParams();
+    if (!query) {
+      return undefined;
     }
 
-    return this.httpClient.get<Order[]>(`${environment.apiUrl}/orders`, { params });
+    Object.entries(query).forEach(([key, value]) => {
+      if (value instanceof Date) {
+        params = params.append(key, value.toISOString());
+      } else if (Boolean(value)) {
+        params = params.append(key, value);
+      }
+    });
+
+    return params;
   }
 }

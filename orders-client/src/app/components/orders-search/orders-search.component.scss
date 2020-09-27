@@ -1,0 +1,22 @@
+:host {
+  display: block;
+  padding: 15px;
+  border: 1px solid lightgray;
+  border-radius: 8px;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+}
+
+.input-containers {
+  display: flex;
+  justify-content: space-between;
+  padding: 0 50px 0 50px;
+}
+
+.search {
+  align-self: center;
+  width: 200px;
+}

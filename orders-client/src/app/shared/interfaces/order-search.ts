@@ -4,4 +4,5 @@ export interface OrderSearch {
   email: string;
   startDate: Date;
   endDate: Date;
+  [value: string]: any;
 }
