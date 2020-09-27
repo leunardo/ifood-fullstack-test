@@ -96,6 +96,6 @@ In order to run the app, follow the steps to run and install the java microservi
 
 #### API
 1. on `orders-bff/api` run the command `dotnet run` to run development mode.
-2. if a new page didn`t open for you, you can access `http://localhost:5000` to access the OpenAPI Documentation of the API.
+2. if a new page didn't open for you, you can access `http://localhost:5000` to access the OpenAPI Documentation of the API.
 
-* .NET Core SDK required to be installed previously.
+*.NET Core SDK required to be installed previously.
