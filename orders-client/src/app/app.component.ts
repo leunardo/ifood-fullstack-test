@@ -40,6 +40,12 @@ export class AppComponent implements OnInit, OnDestroy {
     }
   }
 
+  populate(): void {
+    this.orderService.populate().subscribe(() => {
+      this.orderService.search();
+    });
+  }
+
   private setupForm(): void {
     this.form = this.fb.group({
       name: [],

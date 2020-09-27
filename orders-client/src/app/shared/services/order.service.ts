@@ -27,6 +27,10 @@ export class OrderService {
       });
   }
 
+  populate(): Observable<void> {
+    return this.httpClient.get<void>(`${environment.apiUrl}/orders/populate`);
+  }
+
   openFullOrder(id: string): void {
     this.fullOrderSubject.next(id);
   }
